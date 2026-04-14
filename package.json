@@ -1,0 +1,7 @@
+{
+  "name": "infinity-notes",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
