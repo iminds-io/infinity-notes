@@ -1,0 +1,22 @@
+{
+  "name": "@infinity-notes/note-processor",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "front-matter": "^4.0.2"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.4.0",
+    "vitest": "^3.0.0"
+  }
+}
