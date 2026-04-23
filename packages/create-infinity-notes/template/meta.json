@@ -1,0 +1,6 @@
+{
+  "id": "__BOOK_ID__",
+  "title": "__BOOK_TITLE__",
+  "authors": __BOOK_AUTHORS_JSON__,
+  "description": "__BOOK_DESCRIPTION__"
+}

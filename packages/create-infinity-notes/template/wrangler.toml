@@ -1,0 +1,10 @@
+name = "infinity-notes-api"
+main = "worker/src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[r2_buckets]]
+binding = "NOTES_BUCKET"
+bucket_name = "infinity-notes"
+
+[vars]
+R2_PREFIX = "__R2_PREFIX__"

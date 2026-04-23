@@ -1,29 +1,21 @@
-# __SITE_TITLE__
+# __BOOK_TITLE__
 
-__SITE_DESCRIPTION__
+This directory contains content for the shared Infinity Notes Vite + Hono + R2 deployment.
 
-## Getting Started
+## Structure
 
-Install dependencies:
+- `meta.json` - book metadata used by the catalog
+- `notes/Welcome.md` - entry point
+- `notes/About.md` - source and navigation guide
+- `notes/concepts/` - concept notes
+- `notes/threads/` - argument thread notes
+- `upload.sh` - uploads content to R2 and triggers rebuild
+
+## Upload
 
 ```bash
-npm install
+./upload.sh __BOOK_ID__
 ```
 
-Run the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Adding Notes
-
-Create markdown files in the `notes/` directory. Each file becomes a page.
-
-Link between notes using double brackets: `[[Note Name]]`.
-
-## Built With
-
-Networked notes engine from [beginning-of-infinity](https://github.com/team-reflect/beginning-of-infinity).
+Set `INFINITY_NOTES_BUCKET`, `INFINITY_NOTES_R2_PREFIX`, and
+`INFINITY_NOTES_WORKER_URL` to override the defaults.

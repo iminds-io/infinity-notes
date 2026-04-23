@@ -6,7 +6,7 @@ import {interpolate} from './interpolate'
 
 const TEXT_EXTENSIONS = new Set([
   '.ts', '.tsx', '.js', '.jsx', '.json', '.md', '.css',
-  '.html', '.yml', '.yaml', '.toml', '.txt', '.mjs', '.cjs',
+  '.html', '.yml', '.yaml', '.toml', '.txt', '.mjs', '.cjs', '.sh',
 ])
 
 function isTextFile(filename: string): boolean {
@@ -32,6 +32,9 @@ export async function copyTemplate(
     } else if (isTextFile(entry.name)) {
       const content = await fs.readFile(sourcePath, 'utf8')
       await fs.writeFile(targetPath, interpolate(content, variables))
+      if (entry.name.endsWith('.sh')) {
+        await fs.chmod(targetPath, 0o755)
+      }
     } else {
       await fs.copyFile(sourcePath, targetPath)
     }

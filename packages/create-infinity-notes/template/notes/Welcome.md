@@ -1,9 +1,15 @@
 ---
-title: __SITE_TITLE__
+title: __BOOK_TITLE__
+snippet: Entry point to __BOOK_TITLE__ infinity notes
 ---
 
-# Welcome
+# __BOOK_TITLE__
 
-Welcome to your new networked notes site. Click any link to open it as a new column.
+These notes are a navigable, interconnected reading of *__BOOK_TITLE__* by __BOOK_AUTHORS_TEXT__.
 
-Get started by reading [[Getting Started]], or check out the [[Example Note]] to see what's possible.
+Start by replacing this note with the book overview and reading paths. Link to concepts and threads with `[[Note Name]]`.
+
+## Reading Paths
+
+- Core argument: [[Root Thread]]
+- Key concept: [[Example Concept]]

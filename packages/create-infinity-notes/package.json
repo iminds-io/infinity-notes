@@ -1,7 +1,7 @@
 {
   "name": "create-infinity-notes",
   "version": "0.0.1",
-  "description": "Create a networked notes site with horizontal stacking, backlinks, and hover previews",
+  "description": "Create content directories for Infinity Notes books",
   "bin": {
     "create-infinity-notes": "./dist/index.js"
   },

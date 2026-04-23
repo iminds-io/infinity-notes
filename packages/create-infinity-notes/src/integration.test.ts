@@ -17,39 +17,52 @@ describe('integration: copyTemplate with real template', () => {
       path.join(__dirname, '..', 'template'),
       OUTPUT_DIR,
       {
-        __PROJECT_NAME__: 'test-scaffold',
-        __SITE_TITLE__: 'Test Notes',
-        __SITE_DESCRIPTION__: 'A test notes site',
-        __AUTHOR_NAME__: 'Test Author',
+        __BOOK_ID__: 'test-book',
+        __BOOK_TITLE__: 'Test Book',
+        __BOOK_AUTHORS_JSON__: '["Test Author"]',
+        __BOOK_AUTHORS_TEXT__: 'Test Author',
+        __BOOK_DESCRIPTION__: 'A test book note set',
+        __R2_PREFIX__: 'content/books',
       },
     )
 
     // Key files exist
-    expect(fs.existsSync(path.join(OUTPUT_DIR, 'package.json'))).toBe(true)
-    expect(fs.existsSync(path.join(OUTPUT_DIR, 'pages/_app.tsx'))).toBe(true)
-    expect(fs.existsSync(path.join(OUTPUT_DIR, 'app/components/header.tsx'))).toBe(true)
+    expect(fs.existsSync(path.join(OUTPUT_DIR, 'meta.json'))).toBe(true)
     expect(fs.existsSync(path.join(OUTPUT_DIR, 'notes/Welcome.md'))).toBe(true)
+    expect(fs.existsSync(path.join(OUTPUT_DIR, 'notes/About.md'))).toBe(true)
+    expect(fs.existsSync(path.join(OUTPUT_DIR, 'notes/concepts/.gitkeep'))).toBe(true)
+    expect(fs.existsSync(path.join(OUTPUT_DIR, 'notes/threads/.gitkeep'))).toBe(true)
+    expect(fs.existsSync(path.join(OUTPUT_DIR, 'upload.sh'))).toBe(true)
+    expect(fs.existsSync(path.join(OUTPUT_DIR, 'wrangler.toml'))).toBe(true)
 
     // Interpolation worked
-    const pkg = fs.readFileSync(path.join(OUTPUT_DIR, 'package.json'), 'utf8')
-    expect(pkg).toContain('"name": "test-scaffold"')
-
-    const app = fs.readFileSync(path.join(OUTPUT_DIR, 'pages/_app.tsx'), 'utf8')
-    expect(app).toContain('Test Notes')
-    expect(app).toContain('A test notes site')
-
-    const header = fs.readFileSync(path.join(OUTPUT_DIR, 'app/components/header.tsx'), 'utf8')
-    expect(header).toContain('Test Notes')
+    const meta = JSON.parse(fs.readFileSync(path.join(OUTPUT_DIR, 'meta.json'), 'utf8'))
+    expect(meta).toEqual({
+      id: 'test-book',
+      title: 'Test Book',
+      authors: ['Test Author'],
+      description: 'A test book note set',
+    })
 
     const welcome = fs.readFileSync(path.join(OUTPUT_DIR, 'notes/Welcome.md'), 'utf8')
-    expect(welcome).toContain('Test Notes')
+    expect(welcome).toContain('Test Book')
+
+    const upload = fs.readFileSync(path.join(OUTPUT_DIR, 'upload.sh'), 'utf8')
+    expect(upload).toContain('BOOK_ID="${1:-test-book}"')
+    expect(upload).toContain('R2_PREFIX="${INFINITY_NOTES_R2_PREFIX:-content/books}"')
+    expect(upload).toContain('wrangler r2 object put --remote')
+    expect(upload).toContain('$BUCKET/$R2_PREFIX/$BOOK_ID/meta.json')
+    expect(fs.statSync(path.join(OUTPUT_DIR, 'upload.sh')).mode & 0o111).toBeTruthy()
+
+    const wrangler = fs.readFileSync(path.join(OUTPUT_DIR, 'wrangler.toml'), 'utf8')
+    expect(wrangler).toContain('R2_PREFIX = "content/books"')
 
     // No leftover placeholders anywhere
     const allFiles = getAllFiles(OUTPUT_DIR)
     for (const file of allFiles.filter(isTextFile)) {
       const content = fs.readFileSync(file, 'utf8')
       expect(content, `Leftover placeholder in ${file}`).not.toMatch(
-        /__PROJECT_NAME__|__SITE_TITLE__|__SITE_DESCRIPTION__|__AUTHOR_NAME__/,
+        /__BOOK_ID__|__BOOK_TITLE__|__BOOK_AUTHORS_JSON__|__BOOK_AUTHORS_TEXT__|__BOOK_DESCRIPTION__|__R2_PREFIX__/,
       )
     }
   })
