@@ -1,0 +1,16 @@
+name = "infinity-notes-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[r2_buckets]]
+binding = "NOTES_BUCKET"
+bucket_name = "carto-captures"
+
+[vars]
+R2_PREFIX = "infinity-notes/books"
+
+[env.staging.vars]
+R2_PREFIX = "infinity-notes/staging/books"
+
+[env.production.vars]
+R2_PREFIX = "infinity-notes/prod/books"

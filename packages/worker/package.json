@@ -1,0 +1,26 @@
+{
+  "name": "@infinity-notes/worker",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./src/index.ts",
+  "files": [
+    "src",
+    "tsconfig.json",
+    "wrangler.toml"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test": "vitest run",
+    "dev": "wrangler dev"
+  },
+  "dependencies": {
+    "@infinity-notes/note-processor": "workspace:*",
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "typescript": "^5.4.0",
+    "vitest": "^3.0.0",
+    "wrangler": "^3.100.0"
+  }
+}
