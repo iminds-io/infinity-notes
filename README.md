@@ -38,19 +38,51 @@ pnpm test
 
 ## Create a Book
 
-Use the CLI to create a new book content directory:
+Run the CLI without installing it:
 
 ```bash
 npx create-infinity-notes my-book
 ```
 
-The CLI prompts for:
+Install it globally if you want a reusable local command:
+
+```bash
+npm install -g create-infinity-notes
+create-infinity-notes my-book
+```
+
+Both entrypoints start the same interactive scaffold. The first positional
+argument seeds the default book id and the output directory name. The CLI then
+prompts for:
 
 - book title
 - book id
 - authors
 - description
 - R2 key prefix
+
+Example session:
+
+```text
+$ npx create-infinity-notes my-book
+│
+◇  Book title?
+│  My Book
+◇  Book id?
+│  my-book
+◇  Authors? (comma-separated)
+│  Author One, Author Two
+◇  Book description?
+│  A networked note set
+◇  R2 key prefix?
+│  books
+│
+└  Done! Next steps:
+
+   cd my-book
+   edit notes/
+   ./upload.sh my-book
+```
 
 It creates a directory like this:
 
@@ -69,7 +101,17 @@ my-book/
   README.md
 ```
 
-Edit the markdown files under `notes/`, then upload the book content:
+After scaffolding:
+
+1. `cd my-book`
+2. Edit the markdown files under `notes/`
+3. Upload the book content with `./upload.sh my-book`
+
+The generated `README.md` inside the book directory repeats the upload basics,
+and `upload.sh` uses the scaffolded book id by default. Passing the book id
+explicitly keeps the command obvious when you are scripting or sharing steps.
+
+To publish the book content to R2 and trigger an index rebuild:
 
 ```bash
 cd my-book
@@ -80,7 +122,11 @@ INFINITY_NOTES_WORKER_URL=https://your-worker.workers.dev \
 ```
 
 The upload script writes `meta.json` and every `notes/**/*.md` file to R2, then
-calls the worker rebuild endpoint for that book.
+calls the worker rebuild endpoint for that book. You can override:
+
+- `INFINITY_NOTES_BUCKET` for the target R2 bucket name
+- `INFINITY_NOTES_R2_PREFIX` for the root key prefix, such as `books` or `staging/books`
+- `INFINITY_NOTES_WORKER_URL` for the deployed worker base URL
 
 ## Note Format
 
