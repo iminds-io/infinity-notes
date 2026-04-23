@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.app-shell {
+  position: fixed;
+  inset: 0;
+  height: 100%;
+}
+
+@supports (height: 100dvh) {
+  .app-shell {
+    height: 100dvh;
+  }
+}
+
+.writing-vertical-latin {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.writing-vertical-upright {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.note-preview-popover {
+  @apply bg-white border border-gray-200 shadow-lg rounded-md p-4 max-w-md z-50;
+}
+
+.note-preview-popover-arrow,
+.note-preview-popover-arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+.note-preview-popover-arrow {
+  visibility: hidden;
+}
+
+.note-preview-popover-arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
+}
