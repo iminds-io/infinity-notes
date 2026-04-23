@@ -1,5 +1,23 @@
-node_modules
-.next
-dist
+node_modules/
+**/node_modules/
+
+.next/
+**/.next/
+dist/
+**/dist/
+
+.wrangler/
+**/.wrangler/
+
+.env
+.env.*
+!.env.example
+
 *.log
 .DS_Store
+
+# Keep only sanitized public examples in git.
+examples/*
+!examples/README.md
+!examples/demo-basic/
+!examples/demo-basic/**

@@ -5,7 +5,9 @@
   "scripts": {
     "build": "pnpm -r --filter './packages/*' build",
     "test": "pnpm -r --filter './packages/*' test",
-    "verify": "pnpm --filter @infinity-notes/note-processor build && pnpm -r --filter './packages/*' test && pnpm --filter @infinity-notes/worker build && pnpm --filter @infinity-notes/frontend build && pnpm --filter create-infinity-notes build"
+    "test:release-files": "node --test scripts/check-release-files.test.mjs",
+    "pack:check": "node scripts/check-release-files.mjs",
+    "verify": "pnpm --filter @infinity-notes/note-processor build && pnpm -r --filter './packages/*' test && pnpm --filter @infinity-notes/worker build && pnpm --filter @infinity-notes/frontend build && pnpm --filter create-infinity-notes build && pnpm test:release-files"
   },
   "workspaces": [
     "packages/*"
