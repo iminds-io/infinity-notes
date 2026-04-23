@@ -3,6 +3,8 @@
 Infinity Notes is a small TypeScript monorepo for publishing interconnected
 markdown notes as a browsable knowledge graph.
 
+![Infinity Notes screenshot](assets/infinity-notes-screenshot.png)
+
 It has three runtime parts:
 
 - `@infinity-notes/note-processor` parses markdown notes, wiki links, backlinks,
