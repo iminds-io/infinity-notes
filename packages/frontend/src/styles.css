@@ -112,6 +112,9 @@ body,
 }
 .feed-topbar-search {
   flex: 1;
+  /* min-width:0 lets this flex item shrink below the input's min-content,
+     otherwise the long placeholder pushes feed-btn-surprise off-screen. */
+  min-width: 0;
   display: flex;
   justify-content: center;
 }
@@ -121,6 +124,7 @@ body,
   gap: 11px;
   width: 440px;
   max-width: 100%;
+  min-width: 0;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 100px;
@@ -132,6 +136,7 @@ body,
 }
 .feed-searchbox input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   outline: none;
@@ -152,7 +157,7 @@ body,
   border: none;
   cursor: pointer;
   border-radius: 100px;
-  padding: 10px 18px;
+  padding: 13px 18px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.14em;
@@ -209,7 +214,7 @@ body,
   gap: 9px;
   cursor: pointer;
   border-radius: 100px;
-  padding: 12px 22px;
+  padding: 14px 22px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.14em;
@@ -522,8 +527,8 @@ body,
   font-weight: 400;
 }
 .feed-drawer-close {
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -535,8 +540,8 @@ body,
 .feed-drawer-close::after {
   content: '';
   position: absolute;
-  top: 14px;
-  left: 6px;
+  top: 21px;
+  left: 13px;
   width: 18px;
   height: 1.5px;
   background: currentColor;
@@ -701,9 +706,26 @@ body,
   .feed-hero {
     grid-template-columns: 1fr;
     gap: 30px;
+    padding: 28px 20px 24px;
   }
   .feed-hero-quote {
     font-size: 40px;
+  }
+  /* Override the hero cover's JS-set inline dimensions and font sizes so it
+     doesn't dominate the viewport. !important is the simplest way to beat
+     inline styles without refactoring the cover component. */
+  .feed-hero .feed-cover {
+    width: 168px !important;
+  }
+  .feed-hero .feed-cover-face {
+    width: 168px !important;
+    height: 244px !important;
+  }
+  .feed-hero .feed-cover-title {
+    font-size: 26px !important;
+  }
+  .feed-hero .feed-cover-author {
+    font-size: 14px !important;
   }
   .feed-topbar {
     padding: 14px 20px;
@@ -721,6 +743,53 @@ body,
     width: 100%;
   }
 }
+
+@media (max-width: 500px) {
+  .feed-hero {
+    padding: 22px 18px 22px;
+    gap: 24px;
+  }
+  .feed-hero-quote {
+    font-size: 32px;
+    line-height: 1.08;
+  }
+  .feed-kicker {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+  .feed-row-head,
+  .feed-row-scroll {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* Touch devices never get :hover; surface the tagline by default and drop
+   the row hover-arrows in favour of native swipe + a right-edge fade. */
+@media (hover: none) {
+  .feed-cover-essence {
+    opacity: 1;
+    background: linear-gradient(
+      0deg,
+      rgba(12, 10, 7, 0.78) 0%,
+      rgba(12, 10, 7, 0.05) 70%
+    );
+  }
+  .feed-row-arrow {
+    display: none;
+  }
+  .feed-row-wrap::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    right: 0;
+    bottom: 22px;
+    width: 40px;
+    pointer-events: none;
+    background: linear-gradient(to left, var(--paper), transparent);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .feed-row-scroll {
     scroll-behavior: auto !important;
