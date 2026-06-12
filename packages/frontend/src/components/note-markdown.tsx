@@ -2,6 +2,7 @@ import React, {MouseEvent} from 'react'
 import {markdownToTokens} from '../helpers/markdown'
 import {NoteBacklink} from './note-backlink'
 import clsx from 'clsx'
+import {MathBlock, MathInline} from './math'
 
 interface Props {
   bookId: string
@@ -61,6 +62,12 @@ const tokenToElement = (token: MarkdownToken, options: MarkdownOptions) => {
       return textTokenToElement(token, options)
     case 'paragraph':
       return <p>{tokensToElements(token.tokens || [], options)}</p>
+    case 'mathInline':
+      return <MathInline tex={token.tex} />
+    case 'mathBlock':
+      return <MathBlock tex={token.tex} />
+    case 'escape':
+      return <span>{token.text}</span>
     case 'link':
       return (
         <a href={token.href} target="_blank" rel="noreferrer">

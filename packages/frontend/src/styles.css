@@ -795,3 +795,20 @@ body,
     scroll-behavior: auto !important;
   }
 }
+
+.katex-error {
+  color: var(--accent);
+}
+
+.prose .katex-display {
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+.prose-sm .katex {
+  font-size: 0.95em;
+}
+
+.prose-sm .katex-display {
+  margin: 0.75em 0;
+}

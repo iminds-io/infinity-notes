@@ -43,4 +43,19 @@ describe('NotesBrowserItem', () => {
     expect(collapsedTitle).toHaveClass('writing-vertical-latin')
     expect(collapsedTitle).not.toHaveClass('writing-vertical-upright')
   })
+
+  it('should render math in the full note body', () => {
+    const {container} = render(
+      <NotesBrowserItem
+        bookId="age-of-thinking"
+        note={{
+          ...note('Energy'),
+          markdown: 'Mass-energy: $E = mc^2$.',
+        }}
+        index={0}
+      />,
+    )
+
+    expect(container.querySelector('.katex')).toBeInTheDocument()
+  })
 })

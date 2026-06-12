@@ -95,4 +95,23 @@ describe('NotesFallback', () => {
       '/books/surfaces-and-essences/Welcome?stacked=threads%2FAnalogy+as+the+Core+of+Cognition',
     )
   })
+
+  it('should render math in the mobile fallback body', () => {
+    const {container} = render(
+      <MemoryRouter>
+        <NotesFallback
+          bookId="surfaces-and-essences"
+          initialNotes={[
+            {
+              ...note('Quantum Probability', 'Quantum Probability'),
+              markdown: 'Born rule: $P_i = |\\psi_i|^2$.',
+            },
+          ]}
+          concepts={[]}
+        />
+      </MemoryRouter>,
+    )
+
+    expect(container.querySelector('.katex')).toBeInTheDocument()
+  })
 })
